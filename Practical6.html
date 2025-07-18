@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Number Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .prime-number {
+            display: inline-block;
+            margin: 5px;
+            padding: 5px 10px;
+            background-color: #2ecc71;
+            color: white;
+            border-radius: 3px;
+        }
+        .error {
+            color: #e74c3c;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prime Number Finder</h1>
+        
+        <div class="input-group">
+            <label for="start">Starting Number:</label>
+            <input type="number" id="start" min="2" placeholder="Enter starting number (≥2)">
+        </div>
+        
+        <div class="input-group">
+            <label for="end">Ending Number:</label>
+            <input type="number" id="end" placeholder="Enter ending number">
+        </div>
+        
+        <button onclick="findPrimes()">Find Prime Numbers</button>
+        
+        <div id="error" class="error"></div>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function isPrime(num) {
+            if (num <= 1) return false;
+            if (num === 2) return true;
+            if (num % 2 === 0) return false;
+            
+            for (let i = 3; i <= Math.sqrt(num); i += 2) {
+                if (num % i === 0) return false;
+            }
+            return true;
+        }
+        
+        function findPrimes() {
+            const start = parseInt(document.getElementById('start').value);
+            const end = parseInt(document.getElementById('end').value);
+            const errorElement = document.getElementById('error');
+            const resultElement = document.getElementById('result');
+            
+            // Clear previous results and errors
+            errorElement.textContent = '';
+            resultElement.innerHTML = '';
+            
+            // Validate input
+            if (isNaN(start) || isNaN(end)) {
+                errorElement.textContent = 'Please enter valid numbers.';
+                return;
+            }
+            
+            if (start < 2) {
+                errorElement.textContent = 'Starting number must be 2 or greater.';
+                return;
+            }
+            
+            if (end < start) {
+                errorElement.textContent = 'Ending number must be greater than starting number.';
+                return;
+            }
+            
+            // Find and display prime numbers
+            const primes = [];
+            for (let i = start; i <= end; i++) {
+                if (isPrime(i)) {
+                    primes.push(i);
+                }
+            }
+            
+            if (primes.length === 0) {
+                resultElement.innerHTML = '<p>No prime numbers found in the specified range.</p>';
+            } else {
+                resultElement.innerHTML = `
+                    <p>Found ${primes.length} prime numbers between ${start} and ${end}:</p>
+                    <div class="primes-container">
+                        ${primes.map(num => `<span class="prime-number">${num}</span>`).join('')}
+                    </div>
+                `;
+            }
+        }
+        
+        // Expose the function to the window for the button click
+        window.findPrimes = findPrimes;
+    </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Form Validation</title>
+  <style>
+    body {
+      background: #e6f0fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    form {
+      background: #ffffff;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #2c3e50;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #34495e;
+      font-size: 0.95em;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1em;
+      transition: border 0.3s ease;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #3498db;
+      box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+    }
+
+    .error {
+      color: #e74c3c;
+      font-size: 0.85em;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #2980b9;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="employeeForm" onsubmit="return validateForm()">
+    <h2>Employee Registration</h2>
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name">
+    <div id="nameError" class="error"></div>
+
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email">
+    <div id="emailError" class="error"></div>
+
+    <label for="mobile">Mobile No.:</label>
+    <input type="text" id="mobile" name="mobile">
+    <div id="mobileError" class="error"></div>
+
+    <label for="address">Address:</label>
+    <textarea id="address" name="address" rows="3"></textarea>
+    <div id="addressError" class="error"></div>
+
+    <label for="salary">Salary:</label>
+    <input type="text" id="salary" name="salary">
+    <div id="salaryError" class="error"></div>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    function validateForm() {
+      document.getElementById('nameError').innerHTML = "";
+      document.getElementById('emailError').innerHTML = "";
+      document.getElementById('mobileError').innerHTML = "";
+      document.getElementById('addressError').innerHTML = "";
+      document.getElementById('salaryError').innerHTML = "";
+
+      let name = document.getElementById('name').value.trim();
+      let email = document.getElementById('email').value.trim();
+      let mobile = document.getElementById('mobile').value.trim();
+      let address = document.getElementById('address').value.trim();
+      let salary = document.getElementById('salary').value.trim();
+
+      let isValid = true;
+
+      if (!/^[A-Za-z\s]+$/.test(name)) {
+        document.getElementById('nameError').innerText = "Name must contain only letters and spaces.";
+        isValid = false;
+      }
+
+      if (!/^\S+@\S+\.\S+$/.test(email)) {
+        document.getElementById('emailError').innerText = "Please enter a valid email address.";
+        isValid = false;
+      }
+
+      if (!/^\d{10}$/.test(mobile)) {
+        document.getElementById('mobileError').innerText = "Mobile number must be exactly 10 digits.";
+        isValid = false;
+      }
+
+      if (address === "") {
+        document.getElementById('addressError').innerText = "Address cannot be empty.";
+        isValid = false;
+      }
+
+      if (!/^\d+(\.\d{1,2})?$/.test(salary) || parseFloat(salary) <= 0) {
+        document.getElementById('salaryError').innerText = "Enter a valid positive salary.";
+        isValid = false;
+      }
+
+      return isValid;
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String and Number Operations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+        .operation {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            min-height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="operation">
+            <h2>String Length Calculator</h2>
+            <input type="text" id="stringInput" placeholder="Enter any string">
+            <button onclick="calculateLength()">Calculate Length</button>
+            <div class="result" id="stringResult"></div>
+        </div>
+
+        <div class="operation">
+            <h2>Number Digit Reverser</h2>
+            <input type="text" id="numberInput" placeholder="Enter a number" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+            <button onclick="reverseDigits()">Reverse Digits</button>
+            <div class="result" id="numberResult"></div>
+        </div>
+    </div>
+
+    <script>
+        function calculateLength() {
+            const input = document.getElementById('stringInput').value;
+            const resultElement = document.getElementById('stringResult');
+            
+            if (input === '') {
+                resultElement.textContent = 'Please enter a string';
+                return;
+            }
+            
+            // Calculate length without using .length property
+            let length = 0;
+            while (input[length] !== undefined) {
+                length++;
+            }
+            
+            resultElement.textContent = `The length of "${input}" is ${length} characters.`;
+        }
+
+        function reverseDigits() {
+            const input = document.getElementById('numberInput').value;
+            const resultElement = document.getElementById('numberResult');
+            
+            if (input === '') {
+                resultElement.textContent = 'Please enter a number';
+                return;
+            }
+            
+            // Reverse digits without using .reverse() method
+            let reversed = '';
+            let i = 0;
+            
+            // First find the length
+            while (input[i] !== undefined) {
+                i++;
+            }
+            
+            // Now build the reversed string
+            while (i > 0) {
+                i--;
+                reversed += input[i];
+            }
+            
+            resultElement.textContent = `Reversed digits: ${reversed}`;
+        }
+
+        // Add event listeners for Enter key
+        document.getElementById('stringInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculateLength();
+            }
+        });
+
+        document.getElementById('numberInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                reverseDigits();
+            }
+        });
+    </script>
+</body>
+</html>
